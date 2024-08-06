@@ -1,2 +1,3 @@
-# exampleproject
-Exemplo de conceitos Spring Boot
+# Project Example
+
+Exemplos de conceitos do framework Spring Boot
