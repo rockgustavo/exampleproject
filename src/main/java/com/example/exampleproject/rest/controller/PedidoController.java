@@ -29,6 +29,7 @@ import com.example.exampleproject.rest.dto.InformacoesPedidoDTO;
 import com.example.exampleproject.rest.dto.PedidoDTO;
 import com.example.exampleproject.service.PedidoService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -40,7 +41,7 @@ public class PedidoController {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public Integer save(@RequestBody PedidoDTO dto) {
+    public Integer save(@Valid @RequestBody PedidoDTO dto) {
         Pedido pedido = service.salvar(dto);
         return pedido.getId();
     }

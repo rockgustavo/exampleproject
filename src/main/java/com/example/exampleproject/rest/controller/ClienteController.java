@@ -21,6 +21,8 @@ import org.springframework.web.server.ResponseStatusException;
 import com.example.exampleproject.model.entity.Cliente;
 import com.example.exampleproject.model.repository.ClienteRepository;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/clientes")
 public class ClienteController {
@@ -53,13 +55,13 @@ public class ClienteController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Cliente save(@RequestBody Cliente cliente) {
+    public Cliente save(@Valid @RequestBody Cliente cliente) {
         return repository.save(cliente);
     }
 
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Map<String, String> update(@PathVariable Integer id,
+    public Map<String, String> update(@Valid @PathVariable Integer id,
             @RequestBody Cliente cliente) {
         return repository
                 .findById(id)
