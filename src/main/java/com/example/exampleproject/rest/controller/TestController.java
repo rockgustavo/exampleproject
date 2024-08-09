@@ -1,4 +1,4 @@
-package com.example.exampleproject.controller;
+package com.example.exampleproject.rest.controller;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
