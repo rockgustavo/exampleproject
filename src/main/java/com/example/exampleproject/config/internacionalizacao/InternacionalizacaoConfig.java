@@ -1,4 +1,4 @@
-package com.example.exampleproject.config;
+package com.example.exampleproject.config.internacionalizacao;
 
 import java.util.Locale;
 

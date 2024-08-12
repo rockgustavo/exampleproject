@@ -1,12 +1,16 @@
 package com.example.exampleproject.rest.controller;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,15 +38,23 @@ public class ClienteController {
     }
 
     @GetMapping("/{codigo}")
-    public Cliente getClienteById(@PathVariable("codigo") Integer id) {
-        return repository
+    public ResponseEntity<Map<String, Object>> getClienteById(@PathVariable("codigo") Integer id, Authentication auth) {
+        Cliente cliente = repository
                 .findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Cliente não encontrado"));
+
+        // Criando um Map para armazenar a resposta
+        Map<String, Object> response = new LinkedHashMap<>();
+        response.put("Usuario_Autenticado", auth.getName());
+        response.put("cliente", cliente);
+
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping
-    public List<Cliente> find(Cliente filtro) {
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Map<String, Object>> find(Cliente filtro, Authentication auth) {
         ExampleMatcher matcher = ExampleMatcher
                 .matching()
                 .withIgnoreCase()
@@ -50,7 +62,14 @@ public class ClienteController {
                         ExampleMatcher.StringMatcher.CONTAINING);
 
         Example<Cliente> example = Example.of(filtro, matcher);
-        return repository.findAll(example);
+        List<Cliente> clientes = repository.findAll(example);
+
+        // Criando um Map para armazenar a resposta
+        Map<String, Object> response = new LinkedHashMap<>();
+        response.put("Usuario_Autenticado", auth.getName());
+        response.put("clientes", clientes);
+
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping

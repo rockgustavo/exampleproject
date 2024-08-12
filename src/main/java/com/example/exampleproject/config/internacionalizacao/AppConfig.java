@@ -1,4 +1,4 @@
-package com.example.exampleproject.config;
+package com.example.exampleproject.config.internacionalizacao;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
