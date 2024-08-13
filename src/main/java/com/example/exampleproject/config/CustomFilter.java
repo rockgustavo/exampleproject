@@ -34,9 +34,13 @@ public class CustomFilter extends OncePerRequestFilter {
                         null,
                         List.of(new SimpleGrantedAuthority("ADMIN")));
 
-                System.out.println("AQUI: " + authentication.getAuthorities());
                 SecurityContext securityContext = SecurityContextHolder.getContext();
                 securityContext.setAuthentication(authentication);
+
+                System.out.println("\n****************");
+                System.out.println("USER: " + authentication.getPrincipal());
+                System.out.println("ROLE: " + authentication.getAuthorities());
+                System.out.println("****************\n");
             }
         }
 

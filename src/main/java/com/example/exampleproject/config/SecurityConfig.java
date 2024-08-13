@@ -18,6 +18,8 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.example.exampleproject.model.security.CustomAuthenticationProvider;
+
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(securedEnabled = true)
@@ -27,6 +29,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(
             HttpSecurity http,
             SenhaMasterAuthenticationProvider senhaMasterAuthenticationProvider,
+            CustomAuthenticationProvider customAuthenticationProvider,
             CustomFilter customFilter) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
@@ -38,6 +41,7 @@ public class SecurityConfig {
                 .httpBasic(Customizer.withDefaults())
                 .formLogin(Customizer.withDefaults())
                 .authenticationProvider(senhaMasterAuthenticationProvider) // anotação abaixo
+                .authenticationProvider(customAuthenticationProvider)
                 .addFilterBefore(customFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }

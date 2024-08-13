@@ -3,11 +3,12 @@ package com.example.exampleproject.config;
 import java.util.List;
 
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
+
+import com.example.exampleproject.model.security.CustomAuthentication;
+import com.example.exampleproject.model.security.IdentificacaoUsuario;
 
 @Component
 public class SenhaMasterAuthenticationProvider implements AuthenticationProvider {
@@ -23,10 +24,13 @@ public class SenhaMasterAuthenticationProvider implements AuthenticationProvider
 
         if (loginMaster.equals(login) && senhaMaster.equals(senha)) {
 
-            return new UsernamePasswordAuthenticationToken(
+            IdentificacaoUsuario identificacaoUsuario = new IdentificacaoUsuario(
+                    "ID_MASTER",
+                    "Master",
                     loginMaster,
-                    senhaMaster,
-                    List.of(new SimpleGrantedAuthority("USER")));
+                    List.of("ADMIN"));
+
+            return new CustomAuthentication(identificacaoUsuario);
         }
 
         return null;
