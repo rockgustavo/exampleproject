@@ -6,11 +6,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import lombok.Data;
 
 @Entity
 @Data
+@Table(name = "USUARIO")
 public class Usuario {
 
     @Id
@@ -20,6 +22,6 @@ public class Usuario {
     private String senha;
     private String nome;
 
-    @Transient
+    @Transient // Serve para indicar que este atributo não sera utilizado no banco
     private List<String> permissoes;
 }
