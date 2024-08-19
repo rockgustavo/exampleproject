@@ -19,6 +19,11 @@ import org.springframework.web.server.ResponseStatusException;
 import com.example.exampleproject.model.entity.Produto;
 import com.example.exampleproject.model.repository.ProdutoRepository;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 
 @RestController
@@ -62,6 +67,11 @@ public class ProdutoController {
                         "Produto não encontrado."));
     }
 
+    @Operation(summary = "Buscar produto por ID", description = "Retorna o produto correspondente ao ID fornecido.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Produto encontrado", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Produto.class))),
+            @ApiResponse(responseCode = "404", description = "Produto não encontrado")
+    })
     @GetMapping("{id}")
     public Produto getById(@PathVariable Integer id) {
         return repository
