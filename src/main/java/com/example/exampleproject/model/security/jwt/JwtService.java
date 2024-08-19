@@ -17,11 +17,11 @@ import lombok.RequiredArgsConstructor;
 public class JwtService {
     private final JwtEncoder encoder;
 
-    public String getGenerateToken(Authentication authenticantion) {
+    public String getGenerateToken(Authentication authentication) {
         Instant now = Instant.now();
         long expiry = 3600L;
 
-        String scopes = authenticantion.getAuthorities().stream()
+        String scopes = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(" "));
 
@@ -29,7 +29,7 @@ public class JwtService {
                 .issuer("spring-security-jwt")
                 .issuedAt(now)
                 .expiresAt(now.plusSeconds(expiry))
-                .subject(authenticantion.getName())
+                .subject(authentication.getName())
                 .claim("authorities", scopes)
                 .build();
 

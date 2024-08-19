@@ -105,7 +105,9 @@ public class SecurityConfig {
 
     @Bean
     JwtDecoder jwtDecoder() {
-        return NimbusJwtDecoder.withPublicKey(this.key).build();
+        // return NimbusJwtDecoder.withPublicKey(this.key).build(); -- Usar a PublicKey
+        String jwkSetUri = "http://localhost:8080/realms/exampleproject/protocol/openid-connect/certs";
+        return NimbusJwtDecoder.withJwkSetUri(jwkSetUri).build();
     }
 
     @Bean

@@ -16,13 +16,22 @@ public class TesteDeRotasController {
 
     @GetMapping("/private")
     public ResponseEntity<String> privateRoute(Authentication authentication) {
-        System.out.println(authentication.getClass());
-        return ResponseEntity.ok("Private route ok! Usuário conectado: " + authentication.getName());
+        dadosUser(authentication, "Private");
+        return ResponseEntity.ok("Private route ok!");
     }
 
     @GetMapping("/admin")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<String> adminRoute() {
+    public ResponseEntity<String> adminRoute(Authentication authentication) {
+        dadosUser(authentication, "Admin");
         return ResponseEntity.ok("Admin route ok!");
+    }
+
+    private void dadosUser(Authentication authentication, String rota) {
+        System.out.println("\n****************");
+        System.out.println(rota + " route");
+        System.out.println("USER: " + authentication.getName());
+        System.out.println("ROLES: " + authentication.getAuthorities());
+        System.out.println("****************\n");
     }
 }
