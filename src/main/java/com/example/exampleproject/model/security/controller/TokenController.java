@@ -30,7 +30,7 @@ public class TokenController {
 
         try {
             var result = new RestTemplate().postForEntity(
-                    "http://localhost:8080/realms/exampleproject/protocol/openid-connect/token",
+                    "http://keycloak:8080/realms/exampleproject/protocol/openid-connect/token",
                     entity,
                     String.class);
 

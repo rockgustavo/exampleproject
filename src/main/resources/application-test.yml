@@ -32,10 +32,12 @@ spring:
             scope: openid, profile, email
         provider:
           keycloak:
-            issuer-uri: http://localhost:8080/realms/exampleproject
+            # Altere o nome do host para o nome do serviço no Docker Compose
+            issuer-uri: http://keycloak:8080/realms/exampleproject
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:8080/realms/exampleproject
+          # Também altere aqui para o nome do serviço no Docker Compose
+          issuer-uri: http://keycloak:8080/realms/exampleproject
 
 server:
   port: 8081
