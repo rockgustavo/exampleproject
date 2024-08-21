@@ -28,16 +28,16 @@ spring:
         registration:
           keycloak:
             client-id: exampleproject
-            client-secret: rlAP5kngEPQy7EGXO9BcD6zbPTfZ7fnk
+            client-secret: seAtivarClientAuthenticationGerarSenha
             scope: openid, profile, email
         provider:
           keycloak:
             # Altere o nome do host para o nome do serviço no Docker Compose
-            issuer-uri: http://keycloak:8080/realms/exampleproject
+            issuer-uri: http://localhost:8080/realms/exampleproject
       resourceserver:
         jwt:
           # Também altere aqui para o nome do serviço no Docker Compose
-          issuer-uri: http://keycloak:8080/realms/exampleproject
+          issuer-uri: http://localhost:8080/realms/exampleproject
 
 server:
   port: 8081
