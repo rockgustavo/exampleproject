@@ -49,9 +49,15 @@ public class PedidoServiceImpl implements PedidoService {
         pedido.setStatus(StatusPedido.REALIZADO);
 
         List<ItemPedido> itemsPedido = converterItems(pedido, dto.getItems());
-        repository.save(pedido);
+
+        // Salvar pedido antes de salvar os itens
+        pedido = repository.save(pedido);
+
+        // Definir os itens do pedido após o pedido ser salvo e ter o ID
         itemsPedidoRepository.saveAll(itemsPedido);
         pedido.setItens(itemsPedido);
+
+        // Retornar o pedido salvo
         return pedido;
     }
 
@@ -72,7 +78,7 @@ public class PedidoServiceImpl implements PedidoService {
     }
 
     private List<ItemPedido> converterItems(Pedido pedido, List<ItemPedidoDTO> items) {
-        if (items.isEmpty()) {
+        if (items == null || items.isEmpty()) {
             throw new RegraNegocioException("Não é possível realizar um pedido sem items.");
         }
 

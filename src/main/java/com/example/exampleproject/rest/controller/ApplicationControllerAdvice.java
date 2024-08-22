@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.example.exampleproject.exception.PedidoNaoEncontradoException;
 import com.example.exampleproject.exception.RegraNegocioException;
+import com.example.exampleproject.exception.StatusInvalidoException;
 import com.example.exampleproject.rest.ApiErrors;
 
 @RestControllerAdvice
@@ -37,5 +38,19 @@ public class ApplicationControllerAdvice {
                 .map(erro -> erro.getDefaultMessage())
                 .collect(Collectors.toList());
         return new ApiErrors(errors);
+    }
+
+    @ExceptionHandler(StatusInvalidoException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiErrors handleStatusInvalidoException(StatusInvalidoException ex) {
+        return new ApiErrors(ex.getMessage());
+    }
+
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ApiErrors handleGenericException(Exception ex) {
+        // Logar a exceção para verificar
+        System.out.println("Exceção capturada: " + ex.getClass().getName());
+        return new ApiErrors("Ocorreu um erro interno. Por favor, tente novamente mais tarde.");
     }
 }

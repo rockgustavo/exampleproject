@@ -16,12 +16,14 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "cliente")
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Cliente {
