@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -52,6 +53,11 @@ public class PedidoController {
                 .obterPedidoCompleto(id)
                 .map(p -> converter(p))
                 .orElseThrow(() -> new PedidoNaoEncontradoException());
+    }
+
+    @GetMapping
+    public List<Pedido> listPosts(Pageable pageable) {
+        return service.listarPedidos(pageable).getContent();
     }
 
     @PatchMapping("{id}")

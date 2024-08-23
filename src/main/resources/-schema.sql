@@ -1,26 +1,25 @@
 CREATE DATABASE vendas;
 
-create table cliente (
-        id integer not null auto_increment,
-        cpf varchar(11) not null,
-        nome varchar(100) not null,
-        primary key (id)
+CREATE TABLE IF NOT EXISTS cliente (
+    id BIGINT NOT NULL PRIMARY KEY,
+    cpf VARCHAR(11) NOT NULL,
+    nome VARCHAR(255) NOT NULL
 );
 
-create table produto (
+CREATE TABLE IF NOT EXISTS pedido (
+    id BIGINT NOT NULL PRIMARY KEY,
+    cliente_id BIGINT NOT NULL,
+    data_pedido DATE NOT NULL,
+    total DECIMAL(10, 2) NOT NULL,
+    status VARCHAR(50) NOT NULL,
+    FOREIGN KEY (cliente_id) REFERENCES cliente(id)
+);
+
+create table IF NOT EXISTS produto (
         id integer not null auto_increment,
         descricao varchar(255) not null,
         preco_unitario decimal(38,2) not null,
         primary key (id)
-);
-
-create table pedido (
-    id integer not null auto_increment,
-    data_pedido date,
-    status enum ('CANCELADO','REALIZADO'),
-    total decimal(20,2),
-    cliente_id integer,
-    primary key (id)
 );
 
 create table item_pedido (

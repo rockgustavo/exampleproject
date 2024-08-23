@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.example.exampleproject.exception.PedidoNaoEncontradoException;
@@ -99,5 +101,9 @@ public class PedidoServiceImpl implements PedidoService {
                     return itemPedido;
                 }).collect(Collectors.toList());
 
+    }
+
+    public Page<Pedido> listarPedidos(Pageable pageable) {
+        return repository.findAll(pageable);
     }
 }

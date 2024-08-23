@@ -7,6 +7,7 @@ spring:
     driverClassName: org.h2.Driver
     username: user
     password: ""
+    initialization-mode: always
 
   h2:
     console:
@@ -21,6 +22,7 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
+    defer-datasource-initialization: true
 
   security:
     oauth2:
